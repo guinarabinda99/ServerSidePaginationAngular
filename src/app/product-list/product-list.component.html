@@ -1,0 +1,42 @@
+<div class="container">
+    <h1>Product List</h1>
+    <div class="controls">
+      <label for="pageSize">Page Size:</label>
+      <select id="pageSize" (change)="onPageSizeChange($event)">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+  
+    <p class="range-info">{{ getShowingRange() }}</p>
+  
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>Sl No.</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products; let i = index">
+          <td>{{ i + 1 + (page * size) }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ product.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="page === 0" class="prev-next">Previous</button>
+      <button *ngFor="let p of getPagesToShow()" 
+              (click)="goToPage(p)" 
+              [class.active]="p === page" 
+              [disabled]="p === '...'">
+        {{ p === '...' ? '...' : p + 1 }}
+      </button>
+      <button (click)="nextPage()" [disabled]="page === totalPages - 1" class="prev-next">Next</button>
+    </div>
+  </div>
+  
